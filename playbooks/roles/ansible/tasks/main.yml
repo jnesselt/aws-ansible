@@ -1,0 +1,85 @@
+---
+- name: Set Hostname
+  hostname: name=cmserver-va
+
+- name: Install yum modules
+  yum: "name={{ item }} state=present"
+  with_items:
+    - git
+
+- name: Create Groups
+  group: name=jnesselt
+
+- name: Create Users
+  user: name=jnesselt group=jnesselt groups='' home=/media/ephemeral0/jnesselt shell=/bin/bash append=yes 
+
+- name: git ansible
+  git: repo=git://github.com/ansible/ansible.git dest=/media/ephemeral0/jnesselt/ansible accept_hostkey=yes
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: git aws-ansible
+  git: repo=git://github.com/jnesselt/aws-ansible.git dest=/media/ephemeral0/jnesselt/aws-ansible accept_hostkey=yes
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: Configure .bashrc
+  lineinfile: line="{{ item }}" dest=/media/ephemeral0/jnesselt/.bashrc
+  with_items:
+    - "source ~/ansible/hacking/env-setup"
+    - "PATH=$PATH:~/bin"
+
+- name: Install pip
+  easy_install: name=pip
+
+- name: Install Python modules
+  pip: name="{{ item }}"
+  with_items:
+    - paramiko
+    - PyYAML
+    - Jinja2
+    - httplib2
+
+- name: Create directories 
+  file: path="{{ item }}" state=directory
+  with_items:
+    - "/media/ephemeral0/jnesselt/bin"
+    - "/media/ephemeral0/jnesselt/.ssh/prod"
+    - "/media/ephemeral0/jnesselt/.ssh/preprod"
+    - "/media/ephemeral0/jnesselt/localfiles/etc/mail"
+    - "/media/ephemeral0/jnesselt/localfiles/etc/postfix"
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: copy bin file
+  copy: src=~/bin/setenv.sh dest=/media/ephemeral0/jnesselt/bin/setenv.sh mode=0700
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: copy config file
+  copy: src=~/localfiles/ansible/media/ephemeral0/jnesselt/.ssh/config dest=/media/ephemeral0/jnesselt/.ssh/config mode=0600
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: copy key files
+  copy: src={{ item }} dest=/media/ephemeral0/jnesselt/.ssh/ mode=0600
+  with_items:
+    - "~/.ssh/prod"
+    - "~/.ssh/preprod"
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: copy localfiles
+  copy: src=~/localfiles dest=/media/ephemeral0/jnesselt/localfiles/ mode=0600
+  sudo: yes
+  sudo_user: jnesselt
+
+- name: Fix python warning
+  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(if _fastmath.*)$' line="#\\1"
+- name: Fix python warning
+  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(.*using libgmp.*)$' line="#\\1"
+- name: Add sudo access
+  lineinfile: 'dest=/etc/sudoers line="jnesselt        ALL=(ALL)       NOPASSWD: ALL"'
+
+- name: GIO-itadm-key
+  authorized_key: user=jnesselt key="{{ lookup('file', '~/.ssh/johnnesselt.pub') }}"

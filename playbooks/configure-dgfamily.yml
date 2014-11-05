@@ -1,0 +1,13 @@
+---
+- name: dgfamily
+  hosts: tag_system_dgfamily
+  remote_user: ec2-user
+  sudo: yes
+  #vars_files:
+    # External variable files containing secret variables defined outside of
+    # version control, such as usernames and passwords.
+    #- /etc/ansible/bowker_rest/subversion.yml
+    #- /etc/ansible/bowker_rest/bms.yml
+  roles:
+    - common
+    - dgfamily

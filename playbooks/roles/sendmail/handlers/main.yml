@@ -1,0 +1,4 @@
+---
+
+- name: reload sendmail
+  service: name=sendmail state=reloaded enabled=yes

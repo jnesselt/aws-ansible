@@ -1,0 +1,7 @@
+---
+
+- name: reload sshd
+  service: name=sshd state=reloaded enabled=yes
+
+- name: reload autofs
+  service: name=autofs state=reloaded enabled=yes

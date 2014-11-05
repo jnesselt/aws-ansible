@@ -1,0 +1,6 @@
+---
+- name: Update bash package
+  hosts: "{{ region }}"
+  tasks:
+  - name: yum update
+  yum: name="bash" state=latest

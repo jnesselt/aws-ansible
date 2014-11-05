@@ -1,0 +1,30 @@
+---
+- name: Install postfix Dependencies
+  yum: "name={{ item }} state=present"
+  with_items:
+    - postfix
+    - mail
+
+- name: 
+  service: name=postfix enabled=yes state=started
+
+- name: 
+  service: name=sendmail enabled=no state=stopped
+  ignore_errors: yes
+
+- name: Configure Postfix
+  lineinfile: line='{{ item }}' dest=/etc/postfix/main.cf
+  with_items:
+    - 'relayhost = email-smtp.us-east-1.amazonaws.com:25'
+    - 'smtp_sasl_auth_enable = yes'
+    - 'smtp_sasl_security_options = noanonymous'
+    - 'smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd'
+    - 'smtp_use_tls = yes'
+    - 'smtp_tls_security_level = encrypt'
+    - 'smtp_tls_note_starttls_offer = yes'
+    - 'smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt'
+  notify: reload postfix
+
+- name: Postfix AWS SMTP authentication
+  copy: src=~/localfiles/etc/postfix/sasl_passwd.db dest=/etc/postfix/sasl_passwd.db mode=0644
+  notify: reload postfix

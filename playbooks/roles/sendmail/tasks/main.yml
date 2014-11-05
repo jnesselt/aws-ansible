@@ -1,0 +1,42 @@
+---
+
+- name: Install sendmail Dependencies
+  yum: "name={{ item }} state=latest"
+  with_items:
+    - sendmail
+    - mail
+    - m4
+    - sendmail-cf
+
+- name: 
+  service: name=sendmail enabled=yes state=started
+- name: 
+  service: name=postfix enabled=no state=stopped
+  ignore_errors: yes
+
+- name: sendmail AWS SMTP authentication
+  copy: src=~/localfiles/etc/mail/authinfo.db dest=/etc/mail/authinfo.db mode=0640
+  notify: reload sendmail
+
+- name: Configure access.db
+  lineinfile: line="Connect:email-smtp.us-east-1.amazonaws.com RELAY" dest=/etc/mail/access
+  notify: reload sendmail
+
+- name: 
+  shell: "makemap hash /etc/mail/access.db < /etc/mail/access"
+
+- name: Configure sendmail
+  lineinfile: insertbefore="^MAILER\(smtp\)dnl$" line="{{ item }}" dest=/etc/mail/sendmail.mc
+  with_items:
+    - "define(`SMART_HOST', `email-smtp.us-east-1.amazonaws.com')dnl"
+    - "define(`RELAY_MAILER_ARGS', `TCP $h 25')dnl"
+    - "define(`confAUTH_MECHANISMS', `LOGIN PLAIN')dnl"
+    - "FEATURE(`authinfo', `hash -o /etc/mail/authinfo.db')dnl"
+    - "MASQUERADE_AS(`proquest.com')dnl"
+    - "FEATURE(masquerade_envelope)dnl"
+    - "FEATURE(masquerade_entire_domain)dnl"
+  notify: reload sendmail
+
+- name:
+  shell: m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf
+  notify: reload sendmail

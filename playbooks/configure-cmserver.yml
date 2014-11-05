@@ -1,0 +1,8 @@
+---
+- name: cmserver
+  hosts: tag_system_cmserver
+  remote_user: ec2-user
+  sudo: yes
+  roles:
+    - common
+    - ansible

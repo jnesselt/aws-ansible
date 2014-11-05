@@ -1,0 +1,517 @@
+---
+- name: Install dgfamily Dependencies
+  yum: "name={{ item }} state=present"
+  with_items:
+    - MAKEDEV
+    - libgomp
+    - libXt
+    - jasper-libs
+    - libXfixes
+    - mesa-dri-filesystem
+    - libXdamage
+    - pixman
+    - gnutls
+    - libpciaccess
+    - libdrm
+    - libtool-ltdl
+    - ghostscript-fonts
+    - libwmf-lite
+    - urw-fonts
+    - libXxf86vm
+    - mesa-libGL
+    - mesa-dri1-drivers
+    - mesa-dri-drivers
+    - cairo
+    - jbigkit-libs
+    - libtiff
+    - avahi-libs
+    - cups-libs
+    - ghostscript
+    - ImageMagick
+    - xorg-x11-proto-devel
+    - libICE-devel
+    - libSM-devel
+    - libXau-devel
+    - libxcb-devel
+    - libX11-devel
+    - libXext-devel
+    - libXt-devel
+    - bzip2-devel
+    - ghostscript-devel
+    - libjpeg-turbo-devel
+    - libtiff-devel
+    - zlib-devel
+    - freetype-devel
+    - ImageMagick-devel
+    - ImageMagick-perl
+    - mysql55-libs
+    - MySQL-python
+    - OpenIPMI-libs
+    - net-snmp-libs
+    - OpenIPMI
+    - amtu
+    - antlr
+    - apr
+    - apr-util
+    - aspell
+    - aspell-en
+    - audit-libs-python
+    - m4
+    - perl-Data-Dumper
+    - autoconf
+    - libtirpc
+    - autofs
+    - perl-Test-Harness
+    - perl-Thread-Queue
+    - automake
+    - automake14
+    - automake15
+    - automake16
+    - automake17
+    - libdaemon
+    - avahi
+    - avahi-compat-libdns_sd
+    - avahi-glib
+    - beecrypt
+    - portreserve
+    - bind
+    - bison
+    - boost-system
+    - boost-chrono
+    - boost-thread
+    - boost-filesystem
+    - boost-regex
+    - boost-date-time
+    - boost-wave
+    - boost-graph
+    - boost-locale
+    - boost-timer
+    - boost-iostreams
+    - boost-python
+    - boost-serialization
+    - boost-program-options
+    - boost-signals
+    - boost-context
+    - boost-atomic
+    - boost-random
+    - boost-test
+    - boost-math
+    - boost
+    - boost-devel
+    - bridge-utils
+    - busybox
+    - byacc
+    - checkpolicy
+    - compat-libstdc++-33
+    - tcl
+    - expect
+    - conman
+    - mpfr
+    - libmpc
+    - cpp48
+    - cpp
+    - cpuspeed
+    - lzo
+    - snappy
+    - crash
+    - cscope
+    - ctags
+    - openjpeg-libs
+    - poppler-data
+    - poppler
+    - poppler-utils
+    - cups
+    - libcurl-devel
+    - cvs
+    - cyrus-sasl-devel
+    - db4-cxx
+    - db4-devel
+    - dbus-devel
+    - dbus-glib
+    - dbus-python
+    - dev86
+    - device-mapper-multipath-libs
+    - device-mapper-multipath
+    - diffstat
+    - dmidecode
+    - dnsmasq
+    - sgml-common
+    - xml-common
+    - docbook-dtds
+    - dos2unix
+    - dosfstools
+    - dstat
+    - libcom_err-devel
+    - e2fsprogs-devel
+    - keyutils
+    - ecryptfs-utils
+    - elfutils-libs
+    - elfutils
+    - elfutils-libelf-devel
+    - elfutils-libelf-devel-static
+    - emacs-common
+    - hunspell
+    - emacs
+    - expat-devel
+    - finger
+    - flex
+    - ftp
+    - gamin
+    - gamin-python
+    - kernel-headers
+    - glibc-headers
+    - glibc-devel
+    - gcc48
+    - gcc
+    - libstdc++48-devel
+    - gcc48-c++
+    - gcc-c++
+    - libquadmath
+    - libgfortran
+    - libquadmath48-devel
+    - gcc48-gfortran
+    - gcc-gfortran
+    - libXpm
+    - gd
+    - gdb
+    - gdbm-devel
+    - libunistring
+    - gettext-libs
+    - gettext
+    - glib2-devel
+    - gmp-devel
+    - gnuplot-common
+    - gnuplot
+    - hdparm
+    - hesiod-devel
+    - htmlview
+    - imake
+    - indent
+    - iptraf
+    - libnfnetlink
+    - libmnl
+    - libnetfilter_conntrack
+    - iptstate
+    - jwhois
+    - hardlink
+    - kernel-devel
+    - kexec-tools
+    - keyutils-libs-devel
+    - libsepol-devel
+    - libselinux-devel
+    - krb5-devel
+    - lftp
+    - libIDL
+    - libXmu
+    - libXaw
+    - libXcursor
+    - libXdmcp
+    - libXft
+    - libXinerama
+    - libXrandr
+    - libXres
+    - libattr-devel
+    - libgssglue
+    - nfs-utils-lib
+    - libacl-devel
+    - libaio-devel
+    - libart_lgpl
+    - libcap-devel
+    - libevent
+    - libgpg-error-devel
+    - libgcrypt-devel
+    - libidn-devel
+    - libksba
+    - libnl
+    - libogg
+    - libselinux-python
+    - libselinux-utils
+    - ustr
+    - libsemanage
+    - ncurses-devel
+    - libtool
+    - libusb
+    - libusb-devel
+    - libuser-devel
+    - libwvstreams
+    - xz-devel
+    - libxml2-devel
+    - libxml2-python
+    - libxslt-devel
+    - lockdev
+    - lockdev-devel
+    - ltrace
+    - mailcap
+    - mailx
+    - mcstrans
+    - mgetty
+    - genisoimage
+    - mtools
+    - syslinux
+    - mkbootdisk
+    - mlocate
+    - svrcore
+    - mozldap
+    - mtr
+    - urlview
+    - tokyocabinet
+    - mutt
+    - mysql55-common
+    - mysql55
+    - mysql
+    - neon
+    - net-snmp
+    - slang-devel
+    - newt-devel
+    - perl-Newt
+    - rpcbind
+    - nfs-utils
+    - nmap
+    - nscd
+    - nspr-devel
+    - nss-util-devel
+    - nss-softokn-freebl-devel
+    - nss-softokn-devel
+    - nss-devel
+    - opensp
+    - openjade
+    - openldap-clients
+    - openldap-devel
+    - openssl-devel
+    - oprofile
+    - pam-devel
+    - libthai
+    - pango
+    - paps-libs
+    - paps
+    - patch
+    - patchutils
+    - pciutils-devel
+    - perl-Compress-Raw-Bzip2
+    - perl-Net-Daemon
+    - perl-Compress-Raw-Zlib
+    - perl-IO-Compress
+    - perl-PlRPC
+    - perl-DBI
+    - perl-IO-HTML
+    - perl-LWP-MediaTypes
+    - perl-Encode-Locale
+    - perl-Business-ISBN-Data
+    - perl-Business-ISBN
+    - perl-URI
+    - perl-TimeDate
+    - perl-HTTP-Date
+    - perl-HTTP-Message
+    - perl-HTML-Tagset
+    - perl-HTML-Parser
+    - perl-String-CRC32
+    - pinentry
+    - pinfo
+    - libcgroup
+    - policycoreutils
+    - postgresql92-libs
+    - prelink
+    - pyOpenSSL
+    - pycairo
+    - pygobject2
+    - python26-devel
+    - python-devel
+    - quota-nls
+    - quota
+    - rcs
+    - rdate
+    - rdist
+    - readahead
+    - readline-devel
+    - foomatic-db-filesystem
+    - foomatic-db-ppds
+    - foomatic-db
+    - foomatic
+    - perl-Test-Simple
+    - perl-ExtUtils-Manifest
+    - perl-FCGI
+    - perl-CGI
+    - systemtap-sdt-devel
+    - perl-ExtUtils-ParseXS
+    - perl-ExtUtils-MakeMaker
+    - perl-ExtUtils-Install
+    - perl-devel
+    - redhat-lsb-core
+    - redhat-lsb-printing
+    - redhat-lsb-compat
+    - redhat-lsb
+    - system-rpm-config
+    - rng-tools
+    - rpm-build
+    - popt-devel
+    - rpm-devel
+    - rsh
+    - rarian
+    - scrollkeeper
+    - selinux-policy
+    - selinux-policy-targeted
+    - sendmail-cf
+    - setools-libs
+    - setools-libs-tcl
+    - setools-console
+    - setools
+    - sharutils
+    - sos
+    - splint
+    - sqlite-devel
+    - strace
+    - stunnel
+    - libserf
+    - subversion-libs
+    - subversion
+    - swig
+    - sysstat
+    - systemtap-devel
+    - libdwarf
+    - dyninst
+    - systemtap-runtime
+    - systemtap-client
+    - systemtap
+    - talk
+    - tcsh
+    - telnet
+    - perl-libintl
+    - perl-Text-Unidecode
+    - texinfo
+    - tree
+    - udftools
+    - unix2dos
+    - libusb1
+    - usbutils
+    - usermode
+    - vconfig
+    - xinetd
+    - xterm
+    - ypbind
+    - yp-tools
+    - yum-plugin-keys
+    - yum-updatesd
+    - yum-plugin-verify
+    - xfsprogs
+    - libXp
+    - libsmi
+    - wireshark
+    - xorg-x11-xauth
+    - libxkbfile
+    - xorg-x11-apps
+    - gpm
+
+- name: Create Groups
+  group: name={{item.name}} gid={{item.gid}}
+  with_items:
+  - { name: 'usag',      gid: '5007' }
+  - { name: 'preprod',   gid: '441' }
+  - { name: 'prod',      gid: '421' }
+  - { name: 'devel',     gid: '404' }
+  - { name: 'test',      gid: '420' }
+  - { name: 'dba',       gid: '405' }
+  - { name: 'oinstall',  gid: '406' }
+  - { name: 'cvs',       gid: '450' }
+  - { name: 'rcs',       gid: '407' }
+  - { name: 'tools',     gid: '460' }
+  - { name: 'converter', gid: '12000' }
+  - { name: 'disspub',   gid: '45' }
+
+- name: Make /home/ooprod
+  file: path=/home/ooprod state=directory
+
+- name: Create Users
+  user: name={{ item.name }} group={{ item.group }} groups={{ item.groups }} uid={{ item.uid }} home={{ item.home }} shell={{ item.shell }} comment='{{ item.comment }}' password={{ item.password }}  append=yes 
+  with_items:
+  - { name: 'usag',      group: 'usag',      groups: '',      uid: '5751',  home: '/home/usag',         shell: '/bin/bash', comment: 'Unix Systems Engineering',     password: '$1$peiKBIUS$GUBI5zhQN2cNQTV8WlYBk.' }
+  - { name: 'osag',      group: 'usag',      groups: '',      uid: '5752',  home: '/home/osag',         shell: '/bin/bash', comment: 'Unix Systems Administration',  password: '$1$tE7SVJNn$URMOkeNEnBosUn6jIiynH/' }
+  - { name: 'ooprod',    group: 'prod',      groups: 'tools', uid: '6225',  home: '/home/ooprod/admin', shell: '/bin/bash', comment: 'Online Operations',            password: '$1$U5oytQ9w$08Z.MwUhTiucILkVpapzM/' }
+  - { name: 'tools',     group: 'tools',     groups: '',      uid: '10204', home: '/tools',             shell: '/bin/bash', comment: 'ProQuest Tools Account',       password: '$1$rjQRXheK$pjyYPxWeE5XbdvzVRusRs0' }
+  - { name: 'oracle',    group: 'dba',       groups: '',      uid: '4050',  home: '/home/oracle',       shell: '/bin/ksh',  comment: 'ProQuest Oracle Account',      password: '$1$mcf7mfCT$OvyZ4h4CLCV6uG.8Fc9DH/' }
+  - { name: 'ahough',    group: 'converter', groups: 'tools', uid: '11845', home: '/home/ahough',       shell: '/bin/bash', comment: 'Al Hough Account',             password: '$1$eQcTzcNd$762fSHEdkSaICaPwfbNYA/' }
+  - { name: 'converter', group: 'converter', groups: 'tools', uid: '11846', home: '/app',               shell: '/bin/bash', comment: 'Dialog Converter Account',     password: '$1$jGcc6Q/y$LISeUL/Rnig328/x7zOa7.' }
+  - { name: 'nextstar',  group: 'disspub',   groups: 'tools', uid: '8287',  home: '/home/dialog',       shell: '/bin/bash', comment: 'Nextstar Platform for Dialog', password: '$1$5ciDRzgo$Fo4/qcG4Wbxaol7T/nxn3/' }
+
+- name: chown on /home/ooprod directory
+  file: path=/home/ooprod owner=ooprod group=prod
+
+#- name: Create tools volume
+- filesystem: fstype=ext4 dev=/dev/xvdb
+#- file: path=/tools state=directory
+- mount: src=/dev/xvdb name=/tools fstype=ext4 state=mounted
+- file: path=/tools owner=tools group=tools
+
+#- name: Create app volume
+- filesystem: fstype=ext4 dev=/dev/xvdc
+#- file: path=/app state=directory
+- mount: src=/dev/xvdc name=/app fstype=ext4 state=mounted
+- file: path=/app owner=converter group=converter
+
+#- cp -r /etc/skel/. /tools --------------
+#- cp -r /etc/skel/. /app --------------
+
+- name: Make nfs mount points
+  file: path={{ item.path }} state=directory
+  with_items:
+  - { path: '/mstar/audit_pre' }
+  - { path: '/mstar/ss_pre' }
+  - { path: '/dialog_pcnv1' }
+  - { path: '/mstar/audit_prd' }
+  - { path: '/mstar/ss_prd' }
+  - { path: '/pq_media/datastar' }
+  - { path: '/dialog_ftp' }
+  - { path: '/dialog_pcnv2' }
+  - { path: '/dialog_conv/dialog_conv01' }
+  - { path: '/dialog_ftp2' }
+  - { path: '/dialog_norm/dialog_norm1' }
+  - { path: '/dialog_norm/dialog_norm3' }
+  - { path: '/dialog_norm/dialog_norm5' }
+  - { path: '/dialog_norm/dialog_norm2' }
+  - { path: '/dialog_norm/dialog_norm4' }
+  - { path: '/dialog_conv/dialog_conv02' }
+  - { path: '/dialog_stage/dialog_stage01' }
+  - { path: '/dialog_stage/dialog_stage02' }
+  - { path: '/dialog_ftp3' }
+  - { path: '/dialog_stage/dialog_stage03' }
+  - { path: '/dialog_stage/dialog_stage04' }
+  - { path: '/dialog_patent/dialog_patent01' }
+  - { path: '/dialog_hist/dialog_hist01' }
+  - { path: '/dialog_run/dialog_run01' }
+  - { path: '/dialog_image/dialog_image01' }
+  - { path: '/dialog_home/dialog_home01' }
+  - { path: '/dialog_hist/dialog_hist02' }
+  - { path: '/dialog_run/dialog_run02' }
+  - { path: '/dialog_ftp4' }
+
+#- name: Setup needed services
+- service: name=ntpd enabled=yes state=started
+- service: name=snmpd enabled=yes state=started
+- service: name=cups enabled=no state=stopped
+- service: name=iptables enabled=no state=stopped
+- service: name=ip6tables enabled=no state=stopped
+#- service: name=kdump enabled=yes state=started
+- service: name=gpm enabled=yes state=started
+- service: name=auditd enabled=no state=stopped
+- service: name=xinetd enabled=no state=stopped
+- service: name=nscd enabled=yes state=started
+- service: name=rpcbind enabled=yes state=started
+- service: name=nfs enabled=yes state=started
+- service: name=autofs enabled=yes state=started
+- service: name=sshd enabled=yes state=started
+
+#- name: Modify limits.conf
+- lineinfile: line='csaids           soft    nofile          4096' dest=/etc/security/limits.conf
+- lineinfile: line='csaids           hard    nofile          4096' dest=/etc/security/limits.conf
+- lineinfile: line='converter        soft    nofile          4096' dest=/etc/security/limits.conf
+- lineinfile: line='converter        hard    nofile          4096' dest=/etc/security/limits.conf
+
+- name: Modify sshd_config
+  lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication.*" line="PasswordAuthentication yes" state=present
+  notify: reload sshd
+
+- lineinfile: dest=/etc/auto.master line='/-      /etc/auto.direct        --timeout=0 --ghost'
+  notify: reload autofs
+
+- name: Configure autofs
+  copy: src=~/localfiles/dgfamily/etc/auto.direct dest=/etc/auto.direct mode=0644
+  notify: reload autofs

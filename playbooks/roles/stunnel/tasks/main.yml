@@ -1,0 +1,13 @@
+---
+- name: Install postfix Dependencies
+  yum: "name=stunnel state=present"
+
+- name: Setup stunnel service
+  copy: src=etc/init.d/stunnel dest=/etc/init.d/stunnel mode=0755
+
+- name: 
+  service: name=stunnel enabled=yes state=started
+
+- name: Configure stunnel
+  copy: src=etc/stunnel/stunnel.conf dest=/etc/stunnel/stunnel.conf mode=0644
+  notify: reload stunnel

@@ -1,0 +1,4 @@
+---
+
+- name: reload stunnel
+  service: name=stunnel state=reloaded enabled=yes

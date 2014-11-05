@@ -1,0 +1,6 @@
+---
+- name: Key Distribution
+  hosts: "{{ target }}"
+  tasks:
+  - name: GIO-itadm-key
+    authorized_key: user="{{ ansible_user_id }}" key="{{ lookup('file', '~/.ssh/GIO-itadm.pub') }}" state=absent

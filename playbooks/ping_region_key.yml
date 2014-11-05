@@ -1,0 +1,7 @@
+---
+- name: Intersect Test
+  hosts: "{{ region }}:&key_{{ key_name }}"
+  gather_facts: no
+  tasks:
+  - name: Actual Ping
+    ping:
