@@ -32,8 +32,8 @@ fi
 while read key_name
 do
   if [ "$echo_only" = "Y" -o "$echo_only" = "y" ]; then
-    echo ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts $limit --extra-vars \"region=$region key_name=$key_name\" ~/aws-ansible/playbooks/install-GIO-itasm-key.yml
+    echo ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts $limit --extra-vars \"region=$region key_name=$key_name\" ~/aws-ansible/playbooks/install_GIO_itasm_key.yml
   else
-    ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts $limit --extra-vars "region=$region key_name=$key_name" ~/aws-ansible/playbooks/install-GIO-itasm-key.yml
+    ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts $limit --extra-vars "region=$region key_name=$key_name" ~/aws-ansible/playbooks/install_GIO_itasm_key.yml
   fi
 done < ~/aws-ansible/bin/$region'_keys.dat'
