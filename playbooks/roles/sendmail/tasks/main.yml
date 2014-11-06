@@ -15,7 +15,7 @@
   ignore_errors: yes
 
 - name: sendmail AWS SMTP authentication
-  copy: src=~/localfiles/etc/mail/authinfo.db dest=/etc/mail/authinfo.db mode=0640
+  copy: src=/Users/johnnesselt/localfiles/sendmail/etc/mail/authinfo.db dest=/etc/mail/authinfo.db mode=0640
   notify: reload sendmail
 
 - name: Configure access.db

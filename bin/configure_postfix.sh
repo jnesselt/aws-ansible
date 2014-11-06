@@ -20,4 +20,4 @@ fi
 
 . ~/bin/setenv.sh $environment
 
-ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts --extra-vars "target=$target" ~/aws-ansible/playbooks/configure-postfix.yml -v
+ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts --extra-vars "target=$target" ~/aws-ansible/playbooks/configure_postfix.yml -v

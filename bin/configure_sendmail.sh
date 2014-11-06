@@ -20,4 +20,4 @@ fi
 
 . ~/bin/setenv.sh $environment
 
-ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts --extra-vars "target=$target" ~/aws-ansible/playbooks/configure-sendmail.yml -v
+ansible-playbook -i ~/aws-ansible/inventory/$environment/hosts --extra-vars "target=$target" ~/aws-ansible/playbooks/configure_sendmail.yml -v
