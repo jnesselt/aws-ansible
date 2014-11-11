@@ -8,13 +8,3 @@
 
 - name: Apply all system updates (yum -y update)
   yum: name="*" state=latest
-
-#- name: Install Common System Utilities
-#  yum: "name={{ item }} state=present"
-#  with_items:
-#   - sysstat
-#   - collectl
-#   - tcpdump
-#   - curl
-#   - tree
-#   - '@development'

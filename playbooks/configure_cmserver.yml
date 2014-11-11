@@ -5,4 +5,4 @@
   sudo: yes
   roles:
     - common
-    - ansible
+    - cmserver

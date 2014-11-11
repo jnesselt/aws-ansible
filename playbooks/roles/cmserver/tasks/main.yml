@@ -1,0 +1,136 @@
+---
+- name: Set Hostname
+  hostname: name=cmserver-{{ ec2_region }}
+
+- name: Install yum modules
+  yum: "name={{ item }} state=present"
+  with_items:
+    - git
+    - curl
+    - perl-core
+
+- name: Install pip
+  easy_install: name=pip
+
+- name: Install Python modules
+  pip: name="{{ item }}"
+  with_items:
+    - paramiko
+    - PyYAML
+    - Jinja2
+    - httplib2
+
+- name: Fix python warning
+  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(if _fastmath.*)$' line="#\\1"
+- name: Fix python warning
+#  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(.*using libgmp.*)$' line="#\\1"
+  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(\s*_warn\("Not using mpz_powm_sec.*)$' line="#\\1"
+
+#- name: 
+#  file: path=/media/ephemeral0/ec2-user state=directory
+#- name: 
+#  file: path=/media/ephemeral0/ec2-user/.ssh state=directory
+#
+#- name: copy local files
+#  shell: cp -rp {{ item }} /media/ephemeral0/ec2-user
+#  with_items:
+#    - "/home/ec2-user/.bashrc"
+#    - "/home/ec2-user/.bash_profile"
+#    - "/home/ec2-user/.bash_logout"
+#    - "/home/ec2-user/.ssh"
+#
+#- name: 
+#  lineinfile: dest=/etc/passwd backrefs=yes regexp='^(.*)\/home\/ec2-user(.*)$' line="\\1/media/ephemeral0/ec2-user\\2"
+#
+#- name: 
+#  shell: cd /home/; rm -rf /home/ec2-user; ln -s /media/ephemeral0/ec2-user /home/ec2-user
+
+- name: Create Groups
+  group: name=jnesselt
+
+- name: Create Users
+  user: name=jnesselt group=jnesselt groups='' home=/media/ephemeral0/jnesselt shell=/bin/bash append=yes 
+
+- name: Add sudo access
+  lineinfile: 'dest=/etc/sudoers line="jnesselt        ALL=(ALL)       NOPASSWD: ALL"'
+
+- name: john.nesselt key
+  authorized_key: user=jnesselt key="{{ lookup('file', '~/.ssh/johnnesselt.pub') }}"
+
+- name: git ansible
+  git: repo=git://github.com/ansible/ansible.git dest=/media/ephemeral0/jnesselt/ansible accept_hostkey=yes
+  remote_user: jnesselt
+  sudo: no
+
+- name: git aws-ansible
+  git: repo=git://github.com/jnesselt/aws-ansible.git dest=/media/ephemeral0/jnesselt/aws-ansible accept_hostkey=yes
+  remote_user: jnesselt
+  sudo: no
+
+- name: Configure .bashrc
+  lineinfile: line="{{ item }}" dest=/media/ephemeral0/jnesselt/.bashrc
+  with_items:
+    - "source ~/ansible/hacking/env-setup -q"
+    - "export PATH=$PATH:~/bin:~/perl5/bin"
+  remote_user: jnesselt
+  sudo: no
+
+- name: Create directories 
+  file: path="{{ item }}" state=directory
+  with_items:
+    - "/media/ephemeral0/jnesselt/bin"
+    - "/media/ephemeral0/jnesselt/.ssh/prod"
+    - "/media/ephemeral0/jnesselt/.ssh/preprod"
+    - "/media/ephemeral0/jnesselt/localfiles/etc/mail"
+    - "/media/ephemeral0/jnesselt/localfiles/etc/postfix"
+    - "/media/ephemeral0/jnesselt/scripts/data"
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy bin file
+  copy: src=~/bin/setenv.sh dest=/media/ephemeral0/jnesselt/bin/setenv.sh mode=0700
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy config file
+  copy: src=~/localfiles/ansible/media/ephemeral0/jnesselt/.ssh/config dest=/media/ephemeral0/jnesselt/.ssh/config mode=0600
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy key files
+  copy: src={{ item }} dest=/media/ephemeral0/jnesselt/.ssh/ mode=0600
+  with_items:
+    - "~/.ssh/prod"
+    - "~/.ssh/preprod"
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy localfiles
+  copy: src=~/localfiles dest=/media/ephemeral0/jnesselt/localfiles/ mode=0600
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy script files
+  copy: src={{ item }} dest=/media/ephemeral0/jnesselt/scripts/ mode=0555
+  with_items:
+    - "~/scripts/genshellshockfiles.sh"
+    - "~/scripts/create_csv.pl"
+  remote_user: jnesselt
+  sudo: no
+
+- name: Install cpanm into a local::lib
+  shell: curl -L -o- http://cpanmin.us | perl - -l ~/perl5 App::cpanminus local::lib creates=~/perl5/bin/cpanm
+  remote_user: jnesselt
+  sudo: no
+
+- name: Configure .bashrc to use local::lib
+  lineinfile: dest=~/.bashrc regexp="^eval `perl -I" line='eval `perl -I ~/perl5/lib/perl5 -Mlocal::lib`' state=present
+  remote_user: jnesselt
+  sudo: no
+
+- name: Install perl modules
+  cpanm: name={{ item }} 
+  with_items:
+    - "Spreadsheet::SimpleExcel"
+  remote_user: jnesselt
+  sudo: no

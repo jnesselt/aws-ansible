@@ -30,7 +30,7 @@
         Name: "CM-Server"
         system: cmserver
         environment: preprod
-        creator: john.nesselt@proquest.com
+        account: john.nesselt@proquest.com
     with_indexed_items: ec2info.instances
 
   - name: Add all instance private IPs to host group
