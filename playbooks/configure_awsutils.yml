@@ -1,8 +1,8 @@
 ---
-- name: cmserver
-  hosts: tag_system_cmserver
+- name: awsutils
+  hosts: tag_system_awsutils
   remote_user: ec2-user
   sudo: yes
   roles:
     - common
-    - cmserver
+    - ansible

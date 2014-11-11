@@ -32,5 +32,5 @@ ec2: "{{ ec2_identifiers[region.replace('-', '_')] }}"
 #dgfamily_instance_type: "t2.micro"
 dgfamily_instance_type: "m3.2xlarge"
 dgfamily_instance_count: 1
-cmserver_instance_type: "m3.medium"
-cmserver_instance_count: 1
+awsutils_instance_type: "m3.medium"
+awsutils_instance_count: 1

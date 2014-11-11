@@ -1,6 +1,6 @@
 ---
 - name: Set Hostname
-  hostname: name=cmserver-{{ ec2_region }}
+  hostname: name=awsutils-{{ ec2_region }}
 
 - name: Install yum modules
   yum: "name={{ item }} state=present"
@@ -8,6 +8,7 @@
     - git
     - curl
     - perl-core
+    - tree
 
 - name: Install pip
   easy_install: name=pip
@@ -23,27 +24,7 @@
 - name: Fix python warning
   lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(if _fastmath.*)$' line="#\\1"
 - name: Fix python warning
-#  lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(.*using libgmp.*)$' line="#\\1"
   lineinfile: dest=/usr/lib64/python2.6/site-packages/Crypto/Util/number.py backrefs=yes regexp='^(\s*_warn\("Not using mpz_powm_sec.*)$' line="#\\1"
-
-#- name: 
-#  file: path=/media/ephemeral0/ec2-user state=directory
-#- name: 
-#  file: path=/media/ephemeral0/ec2-user/.ssh state=directory
-#
-#- name: copy local files
-#  shell: cp -rp {{ item }} /media/ephemeral0/ec2-user
-#  with_items:
-#    - "/home/ec2-user/.bashrc"
-#    - "/home/ec2-user/.bash_profile"
-#    - "/home/ec2-user/.bash_logout"
-#    - "/home/ec2-user/.ssh"
-#
-#- name: 
-#  lineinfile: dest=/etc/passwd backrefs=yes regexp='^(.*)\/home\/ec2-user(.*)$' line="\\1/media/ephemeral0/ec2-user\\2"
-#
-#- name: 
-#  shell: cd /home/; rm -rf /home/ec2-user; ln -s /media/ephemeral0/ec2-user /home/ec2-user
 
 - name: Create Groups
   group: name=jnesselt
@@ -115,6 +96,16 @@
   with_items:
     - "~/scripts/genshellshockfiles.sh"
     - "~/scripts/create_csv.pl"
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy check-bash
+  copy: src=HOME/ansible/library/check-bash dest=/media/ephemeral0/jnesselt/ansible/library/ mode=0555
+  remote_user: jnesselt
+  sudo: no
+
+- name: copy .ansible.cfg
+  copy: src=HOME/.ansible.cfg dest=/media/ephemeral0/jnesselt/ mode=0644
   remote_user: jnesselt
   sudo: no
 
