@@ -5,6 +5,19 @@
   connection: local
   gather_facts: False
   tasks:
+
+  - include_vars: awsutils_vars
+#  - include_vars: "{{ region }}"
+
+  - include_vars: us-east-1
+    when: region == "us-east-1"
+  - include_vars: us-west-2
+    when: region == "us-west-2"
+  - include_vars: eu-west-1
+    when: region == "eu-west-1"
+  - include_vars: sp-southeast-1
+    when: region == "sp-southeast-1"
+
   - name: Launch new instance(s)
     local_action:
       module: ec2
@@ -29,7 +42,7 @@
       tags:
         Name: "AWSUtils"
         system: awsutils
-        environment: preprod
+        environment: "{{ env }}"
         account: john.nesselt@proquest.com
     with_indexed_items: ec2info.instances
 

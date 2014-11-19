@@ -1,6 +1,19 @@
 ---
-- name: Set Hostname
-  hostname: name=awsutils-{{ ec2_region }}
+#- name: Set Hostname
+#  hostname: name=awsutils-{{ ec2_region }}-{{ env }}
+
+- name: Download rpmforge rpm
+  shell: wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+
+- name: Install rpmforge rpm
+  yum: name=rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm state=present
+
+- name: copy opsview repo
+  copy: src=~/localfiles/opsview.repo dest=/etc/yum.repos.d/ mode=0644
+
+- name: copy override file
+  copy: src=~/localfiles/override.cfg dest=/usr/local/nagios/etc/nrpe_local/ mode=0644
+  notify: restart opsview-agent
 
 - name: Install yum modules
   yum: "name={{ item }} state=present"
@@ -9,6 +22,10 @@
     - curl
     - perl-core
     - tree
+    - gcc
+    - libxml2-devel
+    - openssl-devel
+    - opsview-agent
 
 - name: Install pip
   easy_install: name=pip
@@ -31,6 +48,9 @@
 
 - name: Create Users
   user: name=jnesselt group=jnesselt groups='' home=/media/ephemeral0/jnesselt shell=/bin/bash append=yes 
+
+- name: Change Permissions on jnesselt
+  file: path=/media/ephemeral0/jnesselt state=directory mode=755
 
 - name: Add sudo access
   lineinfile: 'dest=/etc/sudoers line="jnesselt        ALL=(ALL)       NOPASSWD: ALL"'
@@ -69,7 +89,7 @@
   sudo: no
 
 - name: copy bin file
-  copy: src=~/bin/setenv.sh dest=/media/ephemeral0/jnesselt/bin/setenv.sh mode=0700
+  copy: src=~/bin/setenv.sh dest=/media/ephemeral0/jnesselt/bin/setenv.sh mode=0755
   remote_user: jnesselt
   sudo: no
 
@@ -96,6 +116,9 @@
   with_items:
     - "~/scripts/genshellshockfiles.sh"
     - "~/scripts/create_csv.pl"
+    - "~/scripts/check_ses.pl"
+    - "~/scripts/SES.pm"
+    - "~/scripts/check_ses"
   remote_user: jnesselt
   sudo: no
 
@@ -123,5 +146,10 @@
   cpanm: name={{ item }} 
   with_items:
     - "Spreadsheet::SimpleExcel"
+    - "Switch"
+    - "XML::LibXML"
+    - "URI::Escape"
+    - "LWP"
+    - "LWP::Protocol::https"
   remote_user: jnesselt
   sudo: no

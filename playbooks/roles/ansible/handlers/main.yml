@@ -1,0 +1,4 @@
+---
+
+- name: restart opsview-agent
+  service: name=opsview-agent state=restarted enabled=yes

@@ -3,4 +3,4 @@ set -euo pipefail
 BIN="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../../bin"
 
 source setenv.sh prod 
-$BIN/ec2.py $1
+$BIN/ec2.py --refresh-cache

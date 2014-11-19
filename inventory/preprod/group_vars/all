@@ -1,36 +1,4 @@
 ---
-region: "us-east-1"
-
-# Region specific ec2 identifiers for virtual private cloud (vpc), security
-# groups (sg) and amazon machine images (ami).
-ec2_identifiers:
-  us_east_1:
-    vpc:
-      public:
-        a: ""
-      private:
-        a: "subnet-77595c1c" # 10.241.0.0/23
-        b: "subnet-9e595cf5" # 10.241.16.0/23
-        c: "subnet-3d595c56" # 10.241.64.0/23
-        d: "subnet-55585d3e" # 10.241.80.0/23
-        e: "subnet-aa595cc1" # 10.241.128.0/23
-        f: "subnet-0b585d60" # 10.241.144.0/23
-    sg:
-      public0:  "sg-6e37dc01"
-      private0: "sg-6f37dc00"
-    kp:
-      itadm: "GIO-itadm"
-      pqansible: "PQ-Ansible"
-      johnnesselt: "john.nesselt"
-    ami:
-      amazon_linux_hvm: "ami-76817c1e"
-      amazon_linux_pv:  "ami-7c807d14"
-      amazon_linux_is_hvm: "ami-0268d56a"
-ec2: "{{ ec2_identifiers[region.replace('-', '_')] }}"
-    
 # Instance types and counts used for provisioning
-#dgfamily_instance_type: "t2.micro"
 dgfamily_instance_type: "m3.2xlarge"
 dgfamily_instance_count: 1
-awsutils_instance_type: "m3.medium"
-awsutils_instance_count: 1

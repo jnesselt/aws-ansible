@@ -1,0 +1,26 @@
+---
+# Region specific ec2 identifiers for virtual private cloud (vpc), security
+# groups (sg) and amazon machine images (ami).
+ec2_identifiers:
+  us_west_2:
+    vpc:
+      public:
+        a: ""
+      private:
+        a: "subnet-f6928b9f" # 10.244.0.0/23
+        b: "subnet-518a9338" # 10.244.16.0/23
+        c: "subnet-b7928bde" # 10.244.64.0/23
+        d: "subnet-e28a938b" # 10.244.80.0/23
+        e: "subnet-6f958c06" # 10.244.128.0/23
+        f: "subnet-ff8a9396" # 10.244.144.0/23
+    sg:
+      public0:  "sg-3c3d2450"
+      private0: "sg-3e3d2452"
+    kp:
+      itadm: "GIO-itadm"
+      johnnesselt: "john.nesselt"
+    ami:
+      amazon_linux_hvm: "ami-b5a7ea85"
+      amazon_linux_pv:  "ami-55a7ea65"
+      amazon_linux_is_hvm: "ami-5ba7ea6b"
+ec2: "{{ ec2_identifiers[region.replace('-', '_')] }}"

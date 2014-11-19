@@ -1,0 +1,2 @@
+awsutils_instance_type: "m3.medium"
+awsutils_instance_count: 1
